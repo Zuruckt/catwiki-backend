@@ -12,7 +12,11 @@
 | and give it the Closure to call when that URI is requested.
 |
 */
-$router->get('breeds/top', 'CatController@getTopBreeds');
-$router->get('breeds/{name}', 'CatController@searchBreedsByName');
-$router->get('breed/{name}', 'CatController@getBreed');
+
+$router->group(['middleware' => 'cors'], function() use ($router) {
+    $router->get('breeds/top', 'CatController@getTopBreeds');
+    $router->get('breeds/{name}', 'CatController@searchBreedsByName');
+    $router->get('breed/{name}', 'CatController@getBreed');
+});
+
 

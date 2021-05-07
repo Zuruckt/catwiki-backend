@@ -11,7 +11,7 @@ class CatController extends Controller
 
     public function __construct()
     {
-        $this->service = app(CatApiService::class);
+        $this->service = app(CatApiService::class);    
     }
 
     public function searchBreedsByName(string $name)
