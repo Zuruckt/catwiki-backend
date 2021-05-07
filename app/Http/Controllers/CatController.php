@@ -4,7 +4,6 @@
 namespace App\Http\Controllers;
 
 use App\Services\CatApiService;
-use Illuminate\Support\Arr;
 
 class CatController extends Controller
 {
@@ -27,9 +26,9 @@ class CatController extends Controller
         return $breed;
     }
 
-    public function getTopBreeds(): array
+    public function getTopBreeds()
     {
-
+        return $this->service->getTopBreeds();
     }
 
 }
