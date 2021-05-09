@@ -33,7 +33,6 @@ class SearchRepository
 
     public function getTopBreeds()
     {
-        return $this->model->orderBy('count')->take(10)->get();
-
+        return $this->model->orderBy('count', 'desc')->take(10)->get();
     }
 }
