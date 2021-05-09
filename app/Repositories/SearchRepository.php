@@ -13,7 +13,7 @@ class SearchRepository
         $this->model = app(Search::class);
     }
 
-    public function registerSearch(string $breedName, $breedDescription)
+    public function registerSearch(string $breedName, $breedDescription, $breedPhotoUrl)
     {
         $model = $this->model->where('breed_name', $breedName)->first();
 
@@ -22,7 +22,12 @@ class SearchRepository
             return true;
         }
 
-        $this->model->create(['breed_name' => $breedName, 'breed_description' => $breedDescription, 'count' => 1]);
+        $this->model->create([
+            'breed_name' => $breedName,
+            'breed_description' => $breedDescription,
+            'breed_photo_url' => $breedPhotoUrl,
+            'count' => 1
+            ]);
         return true;
     }
 

@@ -34,10 +34,10 @@ class CatApiService
         $result = $this->client->get('breeds/search?q=' . $name);
 
         $data = json_decode($result->getBody(), true)[0] ?? null;
-
         if(!$data) return [];
 
-        $this->repository->registerSearch($data['name'], $data['description']);
+        $image_url = json_decode($this->client->get('images/' . $data['reference_image_id'])->getBody(), true)['url'];
+        $this->repository->registerSearch($data['name'], $data['description'], $image_url);
         return $data;
     }
 
