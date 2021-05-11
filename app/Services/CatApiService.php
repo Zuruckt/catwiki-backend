@@ -11,7 +11,7 @@ class CatApiService
     private Client $client;
     private SearchRepository $repository;
 
-    public function __construct()
+    public function __construct(SearchRepository $repository)
     {
         $this->client = new Client([
             'base_uri' => 'https://api.thecatapi.com/v1/',
@@ -19,7 +19,7 @@ class CatApiService
                 'x-api-key' => env('CATAPI_TOKEN')
             ],
         ]);
-        $this->repository = app(SearchRepository::class);
+        $this->repository = $repository;
     }
 
     public function searchBreedsByName(string $name): array
@@ -33,16 +33,34 @@ class CatApiService
     {
         $result = $this->client->get('breeds/search?q=' . $name);
 
-        $data = json_decode($result->getBody(), true)[0] ?? null;
+        $data = json_decode($result->getBody(), true)[0] ?? false;
         if(!$data) return [];
 
-        $image_url = json_decode($this->client->get('images/' . $data['reference_image_id'])->getBody(), true)['url'];
-        $this->repository->registerSearch($data['name'], $data['description'], $image_url);
+        $data['image_url'] = json_decode($this->client->get('images/search?breed_ids=' . $data['id'])->getBody(), true)[0]['url'] ?? null;
+        $this->repository->registerSearch(
+            $data['name'],
+            $data['description'],
+            $data['image_url']
+        );
         return $data;
     }
 
     public function getTopBreeds(): Collection
     {
-        return $this->repository->getTopBreeds();
+        return dd($this->repository->getTopBreeds()->toArray());
+    }
+
+    public function getBreedImages($breedId): array
+    {
+        $result = $this->client->get(
+            'images/search',
+            [
+                'query' => [
+                    'limit' => 20,
+                    'breed_id' =>$breedId,
+                ]
+            ]
+        );
+        return array_column(json_decode($result->getBody(), true), 'url'));
     }
 }

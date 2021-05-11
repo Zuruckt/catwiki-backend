@@ -9,9 +9,9 @@ class CatController extends Controller
 {
     private CatApiService $service;
 
-    public function __construct()
+    public function __construct(CatApiService $service)
     {
-        $this->service = app(CatApiService::class);    
+        $this->service = $service;    
     }
 
     public function searchBreedsByName(string $name)
@@ -29,6 +29,11 @@ class CatController extends Controller
     public function getTopBreeds()
     {
         return $this->service->getTopBreeds();
+    }
+
+    public function getBreedImages($breedId)
+    {
+        return $this->service->getBreedImages($breedId);
     }
 
 }

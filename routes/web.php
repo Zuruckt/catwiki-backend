@@ -17,6 +17,7 @@ $router->group(['middleware' => 'cors'], function() use ($router) {
     $router->get('breeds/top', 'CatController@getTopBreeds');
     $router->get('breeds/{name}', 'CatController@searchBreedsByName');
     $router->get('breed/{name}', 'CatController@getBreed');
+    $router->get('breed/{breedId}/images', 'CatController@getBreedImages');
 });
 
 

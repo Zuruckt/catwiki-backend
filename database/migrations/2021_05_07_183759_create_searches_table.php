@@ -17,7 +17,7 @@ class CreateSearchesTable extends Migration
             $table->id();
             $table->string('breed_name');
             $table->text('breed_description');
-            $table->string('breed_photo_url');
+            $table->string('breed_photo_url')->nullable();
             $table->integer('count')->default(0);
             $table->timestamps();
         });
