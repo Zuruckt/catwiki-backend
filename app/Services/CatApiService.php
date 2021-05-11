@@ -61,6 +61,6 @@ class CatApiService
                 ]
             ]
         );
-        return array_column(json_decode($result->getBody(), true), 'url'));
+        return array_column(json_decode($result->getBody(), true), 'url');
     }
 }
