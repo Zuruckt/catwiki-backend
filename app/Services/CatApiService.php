@@ -47,7 +47,7 @@ class CatApiService
 
     public function getTopBreeds(): Collection
     {
-        return dd($this->repository->getTopBreeds()->toArray());
+        return $this->repository->getTopBreeds();
     }
 
     public function getBreedImages($breedId): array
